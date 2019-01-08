@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+error_reporting(E_ALL ^ E_NOTICE);
+
 if($_SESSION['Bad_Login'] == "1")
 {
 echo '
@@ -15,13 +17,35 @@ echo '
 	  <p>U heeft de foute inlog gegevens ingevuld.</p>
 	</div>
 	<div class="modal-footer">
-	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	  <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
 	</div>
   </div>
 </div>
 </div>
 ';
   $_SESSION['Bad_Login'] = "0";
+} 
+
+if($_SESSION['Register'] == "1")
+{
+  echo '
+  <div id="myModal" class="modal fade" role="dialog">
+<div class="modal-dialog">
+  <!-- Modal content-->
+  <div class="modal-content">
+	<div class="modal-header">
+	  <h4 class="modal-title">Registratie voltooid</h4>
+	</div>
+	<div class="modal-body">
+	  <p>U heeft zich geregistreerd u kunt zich nu inloggen.</p>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+	</div>
+  </div>
+</div>
+</div>';
+$_SESSION['Register'] == "0";
 }
 ?>
 <!DOCTYPE html>
@@ -32,6 +56,7 @@ echo '
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <title>Inlog pagina</title>
         <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 	</head>
     <html>
 <div class="login-page">
@@ -58,13 +83,11 @@ echo '
      
   </div>
 </div>  
-
-
 <script>
     
     $(document).ready(function(){        
 	$('#myModal').modal('show');
-	 }); 
+	 });  
 
             $('.message a').click(function(){
    $('form').animate({height: "toggle", opacity: "toggle"}, "slow");

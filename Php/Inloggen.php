@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../Include/db.php';
 
 
@@ -14,7 +15,7 @@ $count = mysqli_num_rows($result);
     if ($count == "1")
     {
         $_SESSION['Email'] = $Email;
-        header("Location: Factuur.php");
+        header("Location: Offerte.php");
     }
     if ($count != "1")
     {
