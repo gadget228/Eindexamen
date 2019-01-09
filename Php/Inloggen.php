@@ -7,6 +7,7 @@ $Email = $_POST['Email'];
 $Pass =  hash('sha512', $_POST['Pass']);
 
 $SQL = "SELECT * FROM gebruiker WHERE Gebemail ='$Email' AND Gebpass = '$Pass'";
+$_SESSION['ID'] = $Email;
 mysqli_select_db($conn, $database);
 $result = mysqli_query($conn, $SQL);
 $count = mysqli_num_rows($result);
@@ -15,7 +16,7 @@ $count = mysqli_num_rows($result);
     if ($count == "1")
     {
         $_SESSION['Email'] = $Email;
-        header("Location: Offerte.php");
+        header("Location: ../Pages/Offerte.php");
     }
     if ($count != "1")
     {
