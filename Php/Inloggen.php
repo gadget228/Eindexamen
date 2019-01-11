@@ -15,7 +15,7 @@ $count = mysqli_num_rows($result);
     
     if ($count == "1")
     {
-        $_SESSION['Email'] = $Email;
+        $_SESSION['ID'] = $Email;
         header("Location: ../Pages/Offerte.php");
     }
     if ($count != "1")

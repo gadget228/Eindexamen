@@ -1,11 +1,17 @@
 <?php
 session_start();
 include '../Include/db.php';
-$ID = $_SESSION['ID'];
-$sql = "SELECT * FROM gebruiker,gebruikersinfo WHERE gebruiker.Gebemail = $ID
-AND gebruiker.GebruikerID = gebruikersinfo.GebruikerID";
-
+$email = $_SESSION['ID'];
+$sql = "SELECT * FROM gebruiker WHERE Gebemail = '$email'";
+mysqli_select_db($conn, $database);
+$row = mysqli_fetch_assoc( mysqli_query($conn,$sql) );
+$_SESSION['GebruikerID'] = $row['GebruikerID'];
+if (!isset($_SESSION['GebruikerID']))
+{
+  echo "asergdfuinpajodfgpiuadsnvfpiasduonfpasoDU:fn asdp;ikgfjhn adpiouvfnaspdoiudv";
+}
 ?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -17,25 +23,41 @@ AND gebruiker.GebruikerID = gebruikersinfo.GebruikerID";
 	</head>
     <html>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <a class="navbar-brand" href="#">Navbar w/ text</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="Offerte.php">Offerte <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
+        <a class="nav-link" href="#">Factuur</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <a class="nav-link" href="Overzicht.php">Overzicht</a>
       </li>
     </ul>
+    <span class="nav-item">
+    <?php
+$ID = $_SESSION['ID'];
+$sql = "SELECT * FROM gebruiker,gebruikersinfo WHERE gebruiker.Gebemail = '$ID'
+AND gebruiker.GebruikerID = gebruikersinfo.GebruikerID";
+
+mysqli_select_db($conn, $database);
+		$result = mysqli_query($conn, $sql);
+		
+		if (!$result) {
+			die('SQL Error: ' . mysqli_error($conn));
+		}
+		
+		while ($row = mysqli_fetch_array($result)) {
+    echo '<a class="nav-link" href="#">'.$row['GebVNaam'].' '.$row['GebANaam'].'</a>';
+    }
+
+       ?>
+    </span>
   </div>
 </nav>
 <div class="row">
@@ -73,6 +95,9 @@ AND gebruiker.GebruikerID = gebruikersinfo.GebruikerID";
 </br>
 <form method="POST" class="Factuur-form" id="FactuurADD" action="../Php/GegevensToevoegen.php">
 <div class="form-group">
+<input type="text" class="form-control" id="FacNaam" aria-describedby="FacNaam" placeholder="Factuur Naam" name="FacNaam">
+</div>
+<div class="form-group">
 <input type="number" class="form-control" id="Facnum" aria-describedby="Facnummer" placeholder="Factuur nummer" name="Facnum">
 </div>
 <div class="form-group">
@@ -106,7 +131,7 @@ AND gebruiker.GebruikerID = gebruikersinfo.GebruikerID";
 <div class="form-group">
 <input type="number" class="form-control" id="BTW" aria-describedby="BTW" placeholder="BTW" name="BTW">
 </div>
-<button type="submit" form="FactuurADD" value="Submit" class="btn btn-primary">Product toevoegen</button>
+<button type="submit" form="ProductADD" value="Submit" class="btn btn-primary">Product toevoegen</button>
 </form>
 </div>
 </div>
@@ -128,10 +153,59 @@ $_SESSION['KStad'];
 <div class="col-md-4">
 <?php
 echo
+$_SESSION['FacNaam'].'</br>'.
 $_SESSION['Facnum'].'</br>'.
 $_SESSION['FDate']. '</br>'.
 $_SESSION['Ref']. '</br>'.
 $_SESSION['FvvDate']. '</br>';
 ?>
+</div>
+</div>
+<div class="row">
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Datum</th>
+      <th scope="col">Omschrijving</th>
+      <th scope="col">Aantal</th>
+      <th scope="col">Prijs</th>
+      <th scope="col">BTW</th>
+      <th scope="col">Bedrag</th>
+    </tr>
+  </thead>
+  <tbody>
+<?php
+$OffID = $_SESSION['Facnum'];
+$sqlProd = "SELECT * FROM product WHERE OfferteID = '$OffID'";
+mysqli_select_db($conn, $database);
+		$resultProd = mysqli_query($conn, $sqlProd);
+		
+		if (!$resultProd) {
+			die('SQL Error: ' . mysqli_error($conn));
+		}
+		
+		while ($rowProd = mysqli_fetch_array($resultProd)) {
+   
+   $Bedrag = $rowProd['PPrijs'] / 100 * ($rowProd['PBTW'] + 100);
+      echo '
+    <tr>
+      <th scope="row">'.$rowProd['ExcDate'].'</th>
+      <td>'.$rowProd['PNaam'].'</td>
+      <td>'.$rowProd['PAantal'].'</td>
+      <td>€'.$rowProd['PPrijs'].'</td>
+      <td>'.$rowProd['PBTW'].'</td>
+      <td>€'.$Bedrag.'</td>
+    ';
+    }
+
+?>
+  </tbody>
+</table>
+
+</div>
+<div class="col-md-2">
 </div>
 </div>

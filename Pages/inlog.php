@@ -66,6 +66,8 @@ $_SESSION['Register'] == "0";
       <input type="password" placeholder="Wachtwoord" name="password"/>
       <input type="text" placeholder="Voornaam" name="Vnaam"/>
       <input type="text" placeholder="Achternaam" name="Anaam"/>
+      <input type="text" placeholder="Iban" name="Iban"/>
+      <input type="text" placeholder="Kamer van Koophandel Nummer" name="KvK"/>
       <input type="text" placeholder="Straat" name="Straat"/>
       <input type="text" placeholder="Huisnummer" name="Hnr"/>
       <input type="text" placeholder="Postcode" name="Postc"/>
