@@ -135,7 +135,7 @@ mysqli_select_db($conn, $database);
 </form>
 </div>
 </div>
-
+<form method="GET" action="../Php/Pdfgenerator2.php">
 <div class="row">
 <div class="col-md-4">
 <?php
@@ -204,7 +204,8 @@ mysqli_select_db($conn, $database);
 ?>
   </tbody>
 </table>
-
+<button type="submit">Generate pdf</button>
+</form>
 </div>
 <div class="col-md-2">
 </div>

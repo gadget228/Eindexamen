@@ -284,8 +284,9 @@ mysqli_select_db($conn, $database);
   </div>
 </nav>
 <div class="container">
+    <h1> Offertes </h1>
   <table class="responsive-table">
-    <caption>Top 10 Grossing Animated Films of All Time</caption>
+    
     <thead>
       <tr>
         <th scope="col">Offerte Naam</th>
@@ -297,14 +298,30 @@ mysqli_select_db($conn, $database);
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">Frozen</th>
-        <td data-title="Released">2013</td>
-        <td data-title="Studio">Disney</td>
-        <td data-title="Worldwide Gross" data-type="currency">$1,276,480,335</td>
-        <td data-title="Domestic Gross" data-type="currency">$400,738,009</td>
-        <td data-title="Download" date-type="Icon"><i class="fas fa-download"></i></td>
-      </tr>
+    <?php
+        $GebID = $_SESSION['GebruikerID'];
+        $sql = "SELECT * FROM offerte,klant WHERE GebID = '$GebID'
+        AND offerte.KID = klant.KID";
+        mysqli_select_db($conn, $database);
+		$result = mysqli_query($conn, $sql);
+		
+		if (!$result) {
+			die('SQL Error: ' . mysqli_error($conn));
+		}
+		
+		while ($row = mysqli_fetch_array($result)) {
+            echo'
+            <tr>
+            <td data-title="Offerte Naam">'.$row['OffNaam'].'
+            <td data-title="Offerte Naam">'.$row['KVnaam'].' '.$row['KAnaam'].'
+            <td data-title="Offerte Naam">'.$row['OffPrijs'].'
+            <td data-title="Offerte Naam">'.$row['OffDate'].'
+            <td data-title="Offerte Naam">'.$row['OffVVDate'].'
+            <td data-title="Download" date-type="Icon"><i class="fas fa-download"></i></td>
+            </tr>
+            ';
+        }
+        ?>
       
     </tbody>
   </table>
