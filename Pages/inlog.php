@@ -72,6 +72,7 @@ $_SESSION['Register'] == "0";
       <input type="text" placeholder="Huisnummer" name="Hnr"/>
       <input type="text" placeholder="Postcode" name="Postc"/>
       <input type="text" placeholder="Woonplaats" name="WoonP"/>
+      <input type="text" placeholder="Telefoonnummer" name="TelNum"/>
       <button type="submit" form="Register" value="Submit">create</button>
       <p class="message">Already registered? <a href="#">Sign In</a></p>
     </form>

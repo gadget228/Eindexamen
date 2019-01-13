@@ -83,7 +83,7 @@ Postcode: '.$row['GebPostc'].' '.$row['GebWoonP'].' <br>
 Nederland <br>
 <br>
 <br>
-Teloofnummer:  <br>
+Teloofnummer: '.$row['GebTelnummer'].' <br>
 Email: '.$_SESSION['ID'].' <br>
 <br>
 <br>
