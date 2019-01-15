@@ -33,7 +33,7 @@ if (!isset($_SESSION['GebruikerID']))
         <a class="nav-link" href="Offerte.php">Offerte <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Factuur</a>
+        <a class="nav-link" href="Factuur.php">Factuur</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="Overzicht.php">Overzicht</a>
@@ -53,13 +53,17 @@ mysqli_select_db($conn, $database);
 		}
 		
 		while ($row = mysqli_fetch_array($result)) {
-    echo '<a class="nav-link" href="#">'.$row['GebVNaam'].' '.$row['GebANaam'].'</a>';
+      echo '<span class="nav-link">  '.$row['GebVNaam'].' '.$row['GebANaam'].'</span>
+				<a class="btn btn-primary" href="../Php/logout.php">
+					<span>logout</span>
+				</a>';
     }
 
        ?>
     </span>
   </div>
 </nav>
+<div class="container">
 <div class="row">
 <div class="col-md-4">
 <h1>Klant toevoegen</h1>
@@ -135,6 +139,7 @@ mysqli_select_db($conn, $database);
 </form>
 </div>
 </div>
+</div>
 <form method="GET" action="../Php/Pdfgenerator2.php">
 <div class="row">
 <div class="col-md-4">
@@ -150,14 +155,14 @@ $_SESSION['KStad'];
 <div class="col-md-4">
 
 </div>
-<div class="col-md-4">
+<div class="col-md-4 text-right">
 <?php
 echo
-$_SESSION['FacNaam'].'</br>'.
-$_SESSION['Facnum'].'</br>'.
-$_SESSION['FDate']. '</br>'.
+$_SESSION['OffNaam'].'</br>'.
+$_SESSION['Offnum'].'</br>'.
+$_SESSION['OffDate']. '</br>'.
 $_SESSION['Ref']. '</br>'.
-$_SESSION['FvvDate']. '</br>';
+$_SESSION['OffvvDate']. '</br>';
 ?>
 </div>
 </div>
@@ -178,7 +183,7 @@ $_SESSION['FvvDate']. '</br>';
   </thead>
   <tbody>
 <?php
-$OffID = $_SESSION['Facnum'];
+$OffID = $_SESSION['Offnum'];
 $sqlProd = "SELECT * FROM product WHERE OfferteID = '$OffID'";
 mysqli_select_db($conn, $database);
 		$resultProd = mysqli_query($conn, $sqlProd);
@@ -204,6 +209,7 @@ mysqli_select_db($conn, $database);
 ?>
   </tbody>
 </table>
+<a href="http://html2pdfrocket.com/html/topdf?apikey=5ee2d0da-293a-4c43-8f0b-cbc576b8b0f7">Download Current Page as PDF</a>
 <button type="submit">Generate pdf</button>
 </form>
 </div>

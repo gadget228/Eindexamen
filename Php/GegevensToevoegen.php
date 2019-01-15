@@ -21,12 +21,12 @@ $KID = $row['KID'];
 $sql = "INSERT INTO offerte(OffID,OffRef,OffDate,OffVVDate,OffNaam,KID,GebID) VALUES('$Facnum','$Ref','$FDate','$FvvDate','$FacNaam','$KID','$GebID')";
 
 if (mysqli_query($conn, $sql)){
-    $_SESSION['FacNaam'] = $FacNaam;
-    $_SESSION['Facnum'] = $Facnum;
-    $_SESSION['FDate'] = $FDate;
+    $_SESSION['OffNaam'] = $FacNaam;
+    $_SESSION['Offnum'] = $Facnum;
+    $_SESSION['OffDate'] = $FDate;
     $_SESSION['Ref'] = $Ref;
-    $_SESSION['FvvDate'] = $FvvDate;
-    $_SESSION['FacADD'] = "1";
+    $_SESSION['OffvvDate'] = $FvvDate;
+    $_SESSION['OffADD'] = "1";
     header("Location:../Pages/Offerte.php");
 }
 else{

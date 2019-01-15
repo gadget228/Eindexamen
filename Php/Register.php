@@ -13,9 +13,10 @@ $WoonP = $_POST['WoonP'];
 $Kvk = $_POST['KvK'];
 $Iban = $_POST['Iban'];
 $Tel = $_POST['TelNum'];
+$BTW = $_POST['BTW'];
 
 $sql = "INSERT INTO gebruiker(Gebemail,Gebpass) VALUES('$email','$ww')";
-$sql2 = "INSERT INTO gebruikersinfo(GebVNaam,GebANaam,GebStraat,GebHnr,GebPostc,GebWoonP,GebKvk,GebIban,GebTelnummer) VALUES('$Vnaam','$Anaam','$Straat','$Hnr','$Postc','$WoonP','$Kvk','$Iban','$Tel')";
+$sql2 = "INSERT INTO gebruikersinfo(GebVNaam,GebANaam,GebStraat,GebHnr,GebPostc,GebWoonP,GebKvk,GebIban,GebTelnummer,GebBTWNr) VALUES('$Vnaam','$Anaam','$Straat','$Hnr','$Postc','$WoonP','$Kvk','$Iban','$Tel','$BTW')";
 
 if (mysqli_query($conn, $sql)) {
     echo "sql1 is goed";

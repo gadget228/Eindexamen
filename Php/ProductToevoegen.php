@@ -2,7 +2,7 @@
 session_start();
 include '../Include/db.php';
 
-$OfferteNum= $_SESSION['Facnum'];
+$OfferteNum= $_SESSION['Offnum'];
 $GebID = $_SESSION['GebruikerID'];
 $ExcDate = $_POST['ExcDate'];
 $ProdDesc =  $_POST['ProdDesc'];

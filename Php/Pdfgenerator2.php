@@ -6,28 +6,7 @@ $sql = "SELECT * FROM gebruikersinfo WHERE GebruikerID ='$ID'";
 mysqli_select_db($conn, $database);
 $row = mysqli_fetch_assoc( mysqli_query($conn,$sql) );
 
-/* $whileloop= $OffID = $_SESSION['Facnum'];
-$sqlProd = "SELECT * FROM product WHERE OfferteID = '$OffID'";
-mysqli_select_db($conn, $database);
-		$resultProd = mysqli_query($conn, $sqlProd);
-		
-		if (!$resultProd) {
-			die('SQL Error: ' . mysqli_error($conn));
-		}
-		
-		while ($rowProd = mysqli_fetch_array($resultProd)) {
-   
-   $Bedrag = $rowProd['PPrijs'] / 100 * ($rowProd['PBTW'] + 100);
-      echo '
-    <tr>
-      <th scope="row">'.$rowProd['ExcDate'].'</th>
-      <td>'.$rowProd['PNaam'].'</td>
-      <td>'.$rowProd['PAantal'].'</td>
-      <td>€'.$rowProd['PPrijs'].'</td>
-      <td>'.$rowProd['PBTW'].'</td>
-      <td>€'.$Bedrag.'</td>
-    ';
-    };*/
+ 
 
 $table = '
 <table class="table table-striped">
@@ -42,9 +21,47 @@ $table = '
     </tr>
   </thead>
   <tbody>
-
-
-
+'.
+$OffID = $_SESSION['Offnum'];
+  $sqlProd = "SELECT * FROM product WHERE OfferteID = '$OffID'";
+  mysqli_select_db($conn, $database);
+      $resultProd = mysqli_fetch_array($conn, $sqlProd);
+      echo "Sql error: " . $sqlProd . "<br>" . mysqli_error($conn);
+      
+      for($i = 0; $i < count($resultProd); $i++) {
+        $row = $resultProd[$i];
+        $Bedrag = $row['PPrijs'] / 100 * ($row['PBTW'] + 100);
+        echo '
+          <tr>
+            <th scope="row">'.$row['ExcDate'].'</th>
+            <td>'.$row['PNaam'].'</td>
+            <td>'.$row['PAantal'].'</td>
+            <td>€'.$row['PPrijs'].'</td>
+            <td>'.$row['PBTW'].'</td>
+            <td>€'.$Bedrag.'</td>
+          </tr>
+        ';
+      }
+      // $i = 0;
+      // while ($rowProd = mysqli_fetch_array($resultProd)) {
+      //   // $i++;
+        
+      //   // $Bedrag = $rowProd['PPrijs'] / 100 * ($rowProd['PBTW'] + 100);
+      //   // echo '
+      //   //   <tr>
+      //   //     <th scope="row">'.$rowProd['ExcDate'].'</th>
+      //   //     <td>'.$rowProd['PNaam'].'</td>
+      //   //     <td>'.$rowProd['PAantal'].'</td>
+      //   //     <td>€'.$rowProd['PPrijs'].'</td>
+      //   //     <td>'.$rowProd['PBTW'].'</td>
+      //   //     <td>€'.$Bedrag.'</td>
+      //   //   </tr>
+      //   // ';
+      //   echo $rowProd;
+      // }
+      // echo $i;
+      mysqli_free_result($resultProd);
+'
   </tbody>
 </table>
 ';
@@ -412,8 +429,8 @@ table {
 }
 
 </style>
-<title>'.$_SESSION['FacNaam'].'</title>
-<h1>'.$_SESSION['FacNaam'].'</h1>
+<title>'.$_SESSION['OffNaam'].'</title>
+<h1>'.$_SESSION['OffNaam'].'</h1>
 <div class="row">
 <p class="alignleft"> Aan: '.$_SESSION['KVnaam'].' '.$_SESSION['KAnaam'].'</br>'.
 $_SESSION['KStraat'].' '.$_SESSION['Khnr'].'</br>'.
@@ -422,10 +439,10 @@ $_SESSION['KStad'].'
 <br>
 <br>
 <br>
-Offerte nummer: '.$_SESSION['Facnum'].'<br>
-Offerte datum: '.$_SESSION['FDate'].'<br>
+Offerte nummer: '.$_SESSION['Offnum'].'<br>
+Offerte datum: '.$_SESSION['OffDate'].'<br>
 Referentie: '.$_SESSION['Ref'].'<br>
-Offerte verval datum: '.$_SESSION['FvvDate'].'<br>
+Offerte verval datum: '.$_SESSION['OffvvDate'].'<br>
 
 </p>
 <p class="alignright">
