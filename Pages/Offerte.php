@@ -171,9 +171,9 @@ $_SESSION['FvvDate']. '</br>';
       <th scope="col">Datum</th>
       <th scope="col">Omschrijving</th>
       <th scope="col">Aantal</th>
-      <th scope="col">Prijs</th>
+      <th scope="col">Prijs per stuk</th>
       <th scope="col">BTW</th>
-      <th scope="col">Bedrag</th>
+      <th scope="col">Totaal bedrag</th>
     </tr>
   </thead>
   <tbody>
@@ -189,7 +189,7 @@ mysqli_select_db($conn, $database);
 		
 		while ($rowProd = mysqli_fetch_array($resultProd)) {
    
-   $Bedrag = $rowProd['PPrijs'] / 100 * ($rowProd['PBTW'] + 100);
+   $Bedrag = $rowProd['PPrijs'] * $rowProd['PAantal'] / 100 * ($rowProd['PBTW'] + 100);
       echo '
     <tr>
       <th scope="row">'.$rowProd['ExcDate'].'</th>
