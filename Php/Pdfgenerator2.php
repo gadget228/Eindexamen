@@ -22,7 +22,7 @@ $table = '
   </thead>
   <tbody>
 '.
-$OffID = $_SESSION['Offnum'];
+  /*$OffID = $_SESSION['Offnum'];
   $sqlProd = "SELECT * FROM product WHERE OfferteID = '$OffID'";
   mysqli_select_db($conn, $database);
       $resultProd = mysqli_fetch_array($conn, $sqlProd);
@@ -60,7 +60,7 @@ $OffID = $_SESSION['Offnum'];
       //   echo $rowProd;
       // }
       // echo $i;
-      mysqli_free_result($resultProd);
+      mysqli_free_result($resultProd); */
 '
   </tbody>
 </table>

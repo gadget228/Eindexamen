@@ -62,27 +62,27 @@ $_SESSION['Register'] == "0";
 <div class="login-page">
   <div class="form">
     <form method="POST" class="register-form" id="Register" action="../Php/Register.php">
-      <input type="text" placeholder="E-mail" name="email"/>
-      <input type="password" placeholder="Wachtwoord" name="password"/>
-      <input type="text" placeholder="Voornaam" name="Vnaam"/>
-      <input type="text" placeholder="Achternaam" name="Anaam"/>
-      <input type="text" placeholder="Iban" name="Iban"/>
-      <input type="text" placeholder="Kamer van Koophandel Nummer" name="KvK"/>
-      <input type="text" placeholder="BTW Nummer" name="BTW"/>
-      <input type="text" placeholder="Straat" name="Straat"/>
-      <input type="text" placeholder="Huisnummer" name="Hnr"/>
-      <input type="text" placeholder="Postcode" name="Postc"/>
-      <input type="text" placeholder="Woonplaats" name="WoonP"/>
-      <input type="text" placeholder="Telefoonnummer" name="TelNum"/>
+      <input type="text" placeholder="E-mail" name="email" required/>
+      <input type="password" placeholder="Wachtwoord" name="password" required/>
+      <input type="text" placeholder="Voornaam" name="Vnaam" required/>
+      <input type="text" placeholder="Achternaam" name="Anaam" required/>
+      <input type="text" placeholder="Iban" name="Iban" required/>
+      <input type="text" placeholder="Kamer van Koophandel Nummer" name="KvK" required/>
+      <input type="text" placeholder="BTW Nummer" name="BTW" required/>
+      <input type="text" placeholder="Straat" name="Straat" required/>
+      <input type="text" placeholder="Huisnummer" name="Hnr" required/>
+      <input type="text" placeholder="Postcode" name="Postc" required/>
+      <input type="text" placeholder="Woonplaats" name="WoonP" required/>
+      <input type="text" placeholder="Telefoonnummer" name="TelNum" required/>
       <button type="submit" form="Register" value="Submit">create</button>
-      <p class="message">Already registered? <a href="#">Sign In</a></p>
+      <p class="message">Al geregistreerd? <a href="#">Log in!</a></p>
     </form>
    
     <form class="login-form" method="POST" id="login" action="../Php/Inloggen.php">
       <input type="text" placeholder="E-mail" name="Email"/>
       <input type="password" placeholder="password" name="Pass"/>
       <button type="submit" form="login" value="Submit">login</button>
-    <p class="message">Not registered? <a href="#" class="Create">Create an account</a></p>
+    <p class="message">Niet geregistreerd? <a href="#" class="Create">Maak een account!</a></p>
     </form>
      
   </div>
