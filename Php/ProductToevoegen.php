@@ -7,7 +7,6 @@ $GebID = $_SESSION['GebruikerID'];
 $ExcDate = $_POST['ExcDate'];
 $ProdDesc =  $_POST['ProdDesc'];
 $Aantal = $_POST['Aantal'];
-$KStraat = $_POST['KStraat'];
 $Prijs = $_POST['Prijs'];
 $BTW = $_POST['BTW'];
 
@@ -16,5 +15,8 @@ $sql = "INSERT INTO product(PNaam, PPrijs, PBTW, ExcDate, GEBID, OfferteID, PAan
 if (mysqli_query($conn, $sql)){
     $_SESSION['ProdADDED'] = "1";
     header("Location:../Pages/Offerte.php");
+}
+else{
+    echo "Sql error: " . $sqlProd . "<br>" . mysqli_error($conn);
 }
 ?>

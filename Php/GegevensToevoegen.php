@@ -10,9 +10,13 @@ mysqli_select_db($conn, $database);
 $row = mysqli_fetch_assoc( mysqli_query($conn,$sql) );
 echo $row['KID'];
 
+$random = date("Ymd");
+$random2 = rand(0, 100000);
+
+
 $GebID = $_SESSION['GebruikerID'];
 $FacNaam = $_POST['FacNaam'];
-$Facnum = $_POST['Facnum'];
+$Facnum = $random."-".$random2;
 $FDate =  $_POST['FDate'];
 $Ref = $_POST['Ref'];
 $FvvDate = $_POST['FvvDate'];

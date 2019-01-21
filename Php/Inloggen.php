@@ -11,7 +11,7 @@ $_SESSION['ID'] = $Email;
 mysqli_select_db($conn, $database);
 $result = mysqli_query($conn, $SQL);
 $count = mysqli_num_rows($result);
-    mysqli_fetch_assoc($result);
+ $row = mysqli_fetch_assoc($result);
     
     if ($count == "1")
     {

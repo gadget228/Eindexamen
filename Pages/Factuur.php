@@ -16,14 +16,16 @@ if (!isset($_SESSION['GebruikerID']))
 <html>
 	<head>
         <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="../css/util.css">
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <title>Offerte pagina</title>
+        <title>Factuur pagina</title>
         <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 	</head>
     <html>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar w/ text</a>
+  <a class="navbar-brand" href="#">Factuur pagina</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -53,13 +55,19 @@ mysqli_select_db($conn, $database);
 		}
 		
 		while ($row = mysqli_fetch_array($result)) {
-    echo '<a class="nav-link" href="#">'.$row['GebVNaam'].' '.$row['GebANaam'].'</a>';
+    echo '<span class="nav-link">'.$row['GebVNaam'].' '.$row['GebANaam'].'</span>';
     }
 
        ?>
     </span>
+    <span class="nav-item">
+    <a class="btn btn-primary" href="../Php/logout.php">
+    logout
+  </a>
+  </span>
   </div>
 </nav>
+<div class="container-login100">
 <div class="container">
 <div class="row">
 <div class="col-md-4">
@@ -70,6 +78,12 @@ mysqli_select_db($conn, $database);
 <input type="email" class="form-control" id="KlantEmail" aria-describedby="KlantEmail" placeholder="Klant email" name="KEmail">
 <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
 </div>
+<div class="form-group">
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>De heer</option>
+      <option>Mevrouw</option>
+    </select>
+  </div>
 <div class="form-group">
 <input type="text" class="form-control" id="KlantVn" aria-describedby="KlantVn" placeholder="Voornaam" name="KVnaam">
 </div>
@@ -97,9 +111,6 @@ mysqli_select_db($conn, $database);
 <form method="POST" class="Factuur-form" id="FactuurADD" action="../Php/GegevensToevoegen.php">
 <div class="form-group">
 <input type="text" class="form-control" id="FacNaam" aria-describedby="FacNaam" placeholder="Factuur Naam" name="FacNaam">
-</div>
-<div class="form-group">
-<input type="number" class="form-control" id="Facnum" aria-describedby="Facnummer" placeholder="Factuur nummer" name="Facnum">
 </div>
 <div class="form-group">
 <input type="date" class="form-control" id="KlantVn" aria-describedby="KlantVn" placeholder="Factuur datum" name="FDate">
@@ -142,11 +153,10 @@ mysqli_select_db($conn, $database);
 <div class="col-md-4">
 <?php
 echo 
-$_SESSION['KEmail'].'</br>'.
-$_SESSION['KVnaam'].' '.$_SESSION['KAnaam'].'</br>'.
-$_SESSION['KStraat'].' '.$_SESSION['Khnr'].'</br>'.
-$_SESSION['KPcd'].'</br>'.
-$_SESSION['KStad'];
+$_SESSION['FacKEmail'].'</br>'.
+$_SESSION['FacKVnaam'].' '.$_SESSION['FacKAnaam'].'</br>'.
+$_SESSION['FacKStraat'].' '.$_SESSION['FacKhnr'].'</br>'.
+$_SESSION['FacKPcd'].' '.$_SESSION['FacKStad'].'</br>';
 ?>
 </div>
 <div class="col-md-4">
@@ -212,3 +222,4 @@ mysqli_select_db($conn, $database);
 <div class="col-md-2">
 </div>
 </div>
+  </div>

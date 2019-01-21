@@ -6,10 +6,8 @@ include '../Include/db.php';
 <html>
 	<head>
         <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="../css/util.css">
-	      <link rel="stylesheet" type="text/css" href="../css/main.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <title>Overzicht Facturen en Offertes</title>
+        <title>Admin pagina</title>
         <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     
@@ -248,7 +246,7 @@ a:hover, a:focus {
     </head>
     <html>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Overzicht pagina</a>
+  <a class="navbar-brand" href="#">Navbar w/ text</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -286,81 +284,42 @@ mysqli_select_db($conn, $database);
   </div>
 </nav>
 <div class="container">
-    <h1> Offertes </h1>
+    <h1> Gebruikers </h1>
   <table class="responsive-table">
     
     <thead>
       <tr>
-        <th scope="col">Offerte Naam</th>
-        <th scope="col">Offerte Klant</th>
-        <th scope="col">Offerte Prijs</th>
-        <th scope="col">Offerte Datum</th>
-        <th scope="col">Offerte Vervaldatum</th>
-        <th scope="col">Download</th>
+        <th scope="col">Gebruiker naam</th>
+        <th scope="col">Gebruikers straat</th>
+        <th scope="col">Gebruikers postcode</th>
+        <th scope="col">Gebruikers email</th>
+        <th scope="col">Gebruikers telefoon nummer</th>
+        <th scope="col">Gebruiker toestaan?</th>
       </tr>
     </thead>
     <tbody>
     <?php
-        $GebID = $_SESSION['GebruikerID'];
-        $sql = "SELECT * FROM offerte,klant WHERE GebID = '$GebID'
-        AND offerte.KID = klant.KID";
-        mysqli_select_db($conn, $database);
-		$result = mysqli_query($conn, $sql);
-		
-		if (!$result) {
-			die('SQL Error: ' . mysqli_error($conn));
-		}
-		
-		while ($row = mysqli_fetch_array($result)) {
-            echo'
-            <tr>
-            <td data-title="Offerte Naam">'.$row['OffNaam'].'
-            <td data-title="Offerte Naam">'.$row['KVnaam'].' '.$row['KAnaam'].'
-            <td data-title="Offerte Naam">'.$row['OffPrijs'].'
-            <td data-title="Offerte Naam">'.$row['OffDate'].'
-            <td data-title="Offerte Naam">'.$row['OffVVDate'].'
-            <td data-title="Download" date-type="Icon"><i class="fas fa-download"></i></td>
-            </tr>
-            ';
-        }
-        ?>
-      
-    </tbody>
-  </table>
-  <h1> Factuur </h1>
-  <table class="responsive-table">
-    
-    <thead>
-      <tr>
-        <th scope="col">Factuur Naam</th>
-        <th scope="col">Factuur Klant</th>
-        <th scope="col">Factuur Prijs</th>
-        <th scope="col">Factuur Datum</th>
-        <th scope="col">Factuur Vervaldatum</th>
-        <th scope="col">Download</th>
-      </tr>
-    </thead>
-    <tbody>
-    <?php
-        $GebID = $_SESSION['GebruikerID'];
-        $sql = "SELECT * FROM factuur,klant WHERE GebID = '$GebID'
-        AND factuur.KID = klant.KID";
-        mysqli_select_db($conn, $database);
-		$result = mysqli_query($conn, $sql);
-		
-		if (!$result) {
-			die('SQL Error: ' . mysqli_error($conn));
-		}
+       $ID = $_SESSION['ID'];
+       $sql = "SELECT * FROM gebruiker,gebruikersinfo WHERE gebruiker.GebruikerID = gebruikersinfo.GebruikerID
+       AND GebPermision = 0";
+       
+       mysqli_select_db($conn, $database);
+               $result = mysqli_query($conn, $sql);
+               
+               if (!$result) {
+                   die('SQL Error: ' . mysqli_error($conn));
+               }
+               
 		
 		while ($row = mysqli_fetch_array($result)) {
             echo'
             <tr>
-            <td data-title="Offerte Naam">'.$row['OffNaam'].'
-            <td data-title="Offerte Naam">'.$row['KVnaam'].' '.$row['KAnaam'].'
-            <td data-title="Offerte Naam">'.$row['OffPrijs'].'
-            <td data-title="Offerte Naam">'.$row['OffDate'].'
-            <td data-title="Offerte Naam">'.$row['OffVVDate'].'
-            <td data-title="Download" date-type="Icon"><i class="fas fa-download"></i></td>
+            <td data-title="Offerte Naam">'.$row['GebVNaam'].' '.$row['GebANaam'].'
+            <td data-title="Offerte Naam">'.$row['GebStraat'].' '.$row['GebHnr'].'
+            <td data-title="Offerte Naam">'.$row['GebPostc'].' '.$row['GebWoonP'].'
+            <td data-title="Offerte Naam">'.$row['Gebemail'].'
+            <td data-title="Offerte Naam">'.$row['GebTelnummer'].'
+            <td data-title="Download"><button class="btn btn-primary">Voeg gebruiker toe</button></td>
             </tr>
             ';
         }

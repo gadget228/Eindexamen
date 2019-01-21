@@ -2,9 +2,21 @@
 session_start();
 include '../Include/db.php';
 $ID = $_SESSION['GebruikerID'];
-$sql = "SELECT * FROM gebruikersinfo WHERE GebruikerID ='$ID'";
+$OffID = $_SESSION['Offnum'];
+$sql = "SELECT * FROM gebruikersinfo,product WHERE GebruikerID ='$ID'
+AND OfferteID = '$OffID'";
 mysqli_select_db($conn, $database);
 $row = mysqli_fetch_assoc( mysqli_query($conn,$sql) );
+
+
+$OffID = $_SESSION['Offnum'];
+$sql2 = "SELECT * FROM product WHERE OfferteID = '$OffID'";
+mysqli_select_db($conn, $database);
+$row2 = mysqli_fetch_array( mysqli_query($conn,$sql2) );
+$Bedrag = $row2['PPrijs'] * $row2['PAantal'] / 100 * ($row2['PBTW'] + 100);
+
+$KlantnaamLength = strlen($_SESSION['KVnaam']);
+$Firstletter = $KlantnaamLength - 1;
 
  
 
@@ -21,14 +33,22 @@ $table = '
     </tr>
   </thead>
   <tbody>
+  <tr>
+            <th scope="row">'.$row2['ExcDate'].'</th>
+            <td>'.$row2['PNaam'].'</td>
+            <td>'.$row2['PAantal'].'</td>
+            <td>€'.$row2['PPrijs'].'</td>
+            <td>'.$row2['PBTW'].'</td>
+            <td>€'.$Bedrag.'</td>
+          </tr>
 '.
-  /*$OffID = $_SESSION['Offnum'];
-  $sqlProd = "SELECT * FROM product WHERE OfferteID = '$OffID'";
+ /* $OffID = $_SESSION['Offnum'];
+  $sql3 = "SELECT * FROM product WHERE OfferteID = '$OffID'";
   mysqli_select_db($conn, $database);
-      $resultProd = mysqli_fetch_array($conn, $sqlProd);
-      echo "Sql error: " . $sqlProd . "<br>" . mysqli_error($conn);
-      
-      for($i = 0; $i < count($resultProd); $i++) {
+      $resultProd = mysqli_query($conn, $sql3);
+     // echo "Sql error: " . $sqlProd . "<br>" . mysqli_error($conn);
+      */
+    /*  for($i = 0; $i < count($resultProd); $i++) {
         $row = $resultProd[$i];
         $Bedrag = $row['PPrijs'] / 100 * ($row['PBTW'] + 100);
         echo '
@@ -41,26 +61,26 @@ $table = '
             <td>€'.$Bedrag.'</td>
           </tr>
         ';
-      }
-      // $i = 0;
-      // while ($rowProd = mysqli_fetch_array($resultProd)) {
-      //   // $i++;
+      } */
+     /*  $i = 0;
+       while ($rowProd = mysqli_fetch_array($resultProd)) {
+          $i++;
         
-      //   // $Bedrag = $rowProd['PPrijs'] / 100 * ($rowProd['PBTW'] + 100);
-      //   // echo '
-      //   //   <tr>
-      //   //     <th scope="row">'.$rowProd['ExcDate'].'</th>
-      //   //     <td>'.$rowProd['PNaam'].'</td>
-      //   //     <td>'.$rowProd['PAantal'].'</td>
-      //   //     <td>€'.$rowProd['PPrijs'].'</td>
-      //   //     <td>'.$rowProd['PBTW'].'</td>
-      //   //     <td>€'.$Bedrag.'</td>
-      //   //   </tr>
-      //   // ';
-      //   echo $rowProd;
-      // }
-      // echo $i;
-      mysqli_free_result($resultProd); */
+          $Bedrag = $rowProd['PPrijs'] / 100 * ($rowProd['PBTW'] + 100);
+          echo '
+            <tr>
+              <th scope="row">'.$rowProd['ExcDate'].'</th>
+              <td>'.$rowProd['PNaam'].'</td>
+              <td>'.$rowProd['PAantal'].'</td>
+              <td>€'.$rowProd['PPrijs'].'</td>
+              <td>'.$rowProd['PBTW'].'</td>
+              <td>€'.$Bedrag.'</td>
+            </tr>
+          ';
+         
+       }
+       echo $i;
+      mysqli_free_result($resultProd);  */
 '
   </tbody>
 </table>
@@ -432,7 +452,7 @@ table {
 <title>'.$_SESSION['OffNaam'].'</title>
 <h1>'.$_SESSION['OffNaam'].'</h1>
 <div class="row">
-<p class="alignleft"> Aan: '.$_SESSION['KVnaam'].' '.$_SESSION['KAnaam'].'</br>'.
+<p class="alignleft"> Aan: '.$_SESSION['KAanspraak'].' '.substr($_SESSION['KVnaam'], 0, -$Firstletter).'. '.$_SESSION['KAnaam'].'</br>'.
 $_SESSION['KStraat'].' '.$_SESSION['Khnr'].'</br>'.
 $_SESSION['KPcd'].'</br>'.
 $_SESSION['KStad'].'
@@ -454,9 +474,11 @@ Nederland <br>
 <br>
 Teloofnummer: '.$row['GebTelnummer'].' <br>
 Email: '.$_SESSION['ID'].' <br>
+Test: '.$row['PNaam'].'
 <br>
 <br>
 Kvk: '.$row['GebKvk'].'<br>
+BTW Nummer: '.$row['GebBTWNr'].'<br>
 Iban: '.$row['GebIban'].'<br>
 </p>
 <br>
