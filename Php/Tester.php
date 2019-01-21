@@ -13,7 +13,7 @@ $Firstletter = $KlantnaamLength - 1;
 ?>
 <!DOCTYPE html>
 <?php
-$to=$row['Gebemail'];
+$to="mobiel228@gmail.com";
 $subject=$_SESSION['OffNaam'];
 // To send HTML mail, the Content-type header must be set
 $headers[] = 'MIME-Version: 1.0';
@@ -21,7 +21,7 @@ $headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
 // Additional headers
 $headers[] = 'To: Bastiaan <'.$row['Gebemail'].'>';
-$headers[] = 'From: Birthday Reminder <birthday@example.com>';
+$headers[] = 'From: php@outlook.nl';
 $message='
 <html>
 	<head>
@@ -526,5 +526,11 @@ mysqli_select_db($conn, $database);
                         $("#result").html(parseFloat(total).toFixed(2));
 </script>
 ';
-mail($to, $subject, $message, implode("\r\n", $headers));
+if(mail($to, $subject, $message, implode("\r\n", $headers)))
+{
+  echo "Mail send";
+}
+else{
+  echo "Kanker";
+}
 ?>
