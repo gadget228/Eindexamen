@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2019 at 03:52 PM
+-- Generation Time: Jan 22, 2019 at 06:00 PM
 -- Server version: 5.7.14
--- PHP Version: 5.6.25
+-- PHP Version: 7.0.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -27,10 +27,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `factuur` (
-  `FactuurID` int(255) NOT NULL,
+  `FactuurID` varchar(255) NOT NULL,
   `KID` int(255) NOT NULL,
   `FNaam` varchar(255) NOT NULL,
-  `FPrijs` varchar(255) NOT NULL,
+  `FacRef` varchar(255) NOT NULL,
+  `FPrijs` varchar(255) DEFAULT NULL,
   `FDate` date NOT NULL,
   `FVVDate` date NOT NULL,
   `GebID` int(255) NOT NULL
@@ -53,9 +54,7 @@ CREATE TABLE `gebruiker` (
 --
 
 INSERT INTO `gebruiker` (`GebruikerID`, `Gebemail`, `Gebpass`) VALUES
-(1, 'bastiaan228@live.nl', 'bc3657feed8e45f14d229e544ade16945ce7931d9538923ef32ab442b2bcb0f3409b4c279566949b3d00cade01c9ba5c491ddf3c321239fbff7a665b1f6280f3'),
-(8, 'a.vanKleef@gmail.com', '4803025b45614c1e4feb857367bc3fd54904badaa9ab420054a52c4bcfc295313e7cadb640ea8214b1cbf2496c2859e4c57564ac51823e54749c371cee786ea4'),
-(9, 'testuser@test.nl', 'c12834f1031f6497214f27d4432f26517ad494156cb88d512bdb1dc4b57db2d692a3dfa269a19b0a0a2a0fd7d6a2a885e33c839c93c206da30a187392847ed27');
+(1, 'admin@admin.nl', '4d0b24ccade22df6d154778cd66baf04288aae26df97a961f3ea3dd616fbe06dcebecc9bbe4ce93c8e12dca21e5935c08b0954534892c568b8c12b92f26a2448');
 
 -- --------------------------------------------------------
 
@@ -71,19 +70,20 @@ CREATE TABLE `gebruikersinfo` (
   `GebHnr` int(255) NOT NULL,
   `GebPostc` varchar(255) NOT NULL,
   `GebWoonP` varchar(255) NOT NULL,
+  `GebTelnummer` varchar(255) NOT NULL,
   `GebKvk` int(255) NOT NULL,
   `GebIban` varchar(255) NOT NULL,
-  `GebLogo` varchar(255) DEFAULT NULL
+  `GebBTWNr` varchar(255) NOT NULL,
+  `GebLogo` varchar(255) DEFAULT NULL,
+  `GebPermision` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `gebruikersinfo`
 --
 
-INSERT INTO `gebruikersinfo` (`GebruikerID`, `GebVNaam`, `GebANaam`, `GebStraat`, `GebHnr`, `GebPostc`, `GebWoonP`, `GebKvk`, `GebIban`, `GebLogo`) VALUES
-(1, 'Bastiaan', 'van Kleef', 'Drostlaan', 8, '6941AB', 'Didam', 123456, 'NL35 INGB 0003 1544 1824', NULL),
-(2, 'Albert', 'van Kleef', 'Woerd', 13, '6999ZD', 'Elst', 0, '', NULL),
-(3, 'Tester', 'Test', 'Drostlaan', 8, '6941AB', 'Didam', 165231, 'NL35 INGB 0003 1544 1824', NULL);
+INSERT INTO `gebruikersinfo` (`GebruikerID`, `GebVNaam`, `GebANaam`, `GebStraat`, `GebHnr`, `GebPostc`, `GebWoonP`, `GebTelnummer`, `GebKvk`, `GebIban`, `GebBTWNr`, `GebLogo`, `GebPermision`) VALUES
+(1, 'Admin', 'Administrator', 'AdminStraat', 5, '9612AB', 'AdminStad', '21311241', 12345, 'NL35 INGB 123123 12412', '124124124', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -94,6 +94,7 @@ INSERT INTO `gebruikersinfo` (`GebruikerID`, `GebVNaam`, `GebANaam`, `GebStraat`
 CREATE TABLE `klant` (
   `KID` int(255) NOT NULL,
   `KEmail` varchar(255) NOT NULL,
+  `KAanspraak` varchar(255) NOT NULL,
   `KVnaam` text NOT NULL,
   `KAnaam` varchar(255) NOT NULL,
   `KStraat` varchar(255) NOT NULL,
@@ -103,15 +104,6 @@ CREATE TABLE `klant` (
   `KToevoeging` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `klant`
---
-
-INSERT INTO `klant` (`KID`, `KEmail`, `KVnaam`, `KAnaam`, `KStraat`, `Khnr`, `KPostc`, `Kwp`, `KToevoeging`) VALUES
-(1, 'testesd@test.hnl', 'Teste', 'Test', 'awdad', 1, '3411AB', 'DAsda', NULL),
-(2, 'bastiaan228@live.nl', 'Bastiaan', 'van Kleef', 'Drostlaan', 8, '6941AB', 'Didam', NULL),
-(3, 'mobiel228@gmail.com', 'asdasd', 'asdas', 'asda', 4, '1234AB', 'Didam', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -119,7 +111,7 @@ INSERT INTO `klant` (`KID`, `KEmail`, `KVnaam`, `KAnaam`, `KStraat`, `Khnr`, `KP
 --
 
 CREATE TABLE `offerte` (
-  `OffID` int(255) NOT NULL,
+  `OffID` varchar(255) NOT NULL,
   `KID` int(255) NOT NULL,
   `OffNaam` varchar(255) NOT NULL,
   `OffRef` varchar(255) NOT NULL,
@@ -128,15 +120,6 @@ CREATE TABLE `offerte` (
   `OffVVDate` date NOT NULL,
   `GebID` int(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `offerte`
---
-
-INSERT INTO `offerte` (`OffID`, `KID`, `OffNaam`, `OffRef`, `OffPrijs`, `OffDate`, `OffVVDate`, `GebID`) VALUES
-(213123, 2, 'Offerte Utrecht Huis', 'A. van Kleef', NULL, '2019-01-11', '2019-01-31', 1),
-(5, 3, 'adsasd', 'A. ban kLefe', NULL, '2019-01-12', '2019-01-26', 1),
-(13245, 3, 'Offerte Utrecht CS', 'A. van Kleef', NULL, '2019-01-12', '2019-01-26', 1);
 
 -- --------------------------------------------------------
 
@@ -152,21 +135,9 @@ CREATE TABLE `product` (
   `PBTW` int(255) NOT NULL,
   `GEBID` int(255) NOT NULL,
   `ExcDate` date NOT NULL,
-  `OfferteID` int(255) NOT NULL
+  `OfferteID` varchar(255) DEFAULT NULL,
+  `FactuurID` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `product`
---
-
-INSERT INTO `product` (`PID`, `PNaam`, `PPrijs`, `PAantal`, `PBTW`, `GEBID`, `ExcDate`, `OfferteID`) VALUES
-(1, 'Tegels leggen', '5000', 0, 21, 1, '2019-01-11', 0),
-(2, 'adadada', '15145', 8, 45, 1, '2019-01-24', 213123),
-(3, 'Tegels leggen', '1313', 214, 21, 1, '2019-01-18', 213123),
-(4, 'asdsa', '123', 3, 12, 1, '2019-01-12', 5),
-(5, 'Tegels leggen', '45', 1313, 13, 1, '2019-01-12', 13245),
-(6, 'Fundering leggen', '15', 13, 25, 1, '2019-01-24', 13245),
-(7, 'Muren plaatsen', '5000', 10, 15, 1, '2019-02-20', 13245);
 
 --
 -- Indexes for dumped tables
@@ -213,35 +184,25 @@ ALTER TABLE `product`
 --
 
 --
--- AUTO_INCREMENT for table `factuur`
---
-ALTER TABLE `factuur`
-  MODIFY `FactuurID` int(255) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `gebruiker`
 --
 ALTER TABLE `gebruiker`
-  MODIFY `GebruikerID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `GebruikerID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `gebruikersinfo`
 --
 ALTER TABLE `gebruikersinfo`
-  MODIFY `GebruikerID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `GebruikerID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `klant`
 --
 ALTER TABLE `klant`
-  MODIFY `KID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `offerte`
---
-ALTER TABLE `offerte`
-  MODIFY `OffID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=213124;
+  MODIFY `KID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `PID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `PID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

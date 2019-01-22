@@ -246,7 +246,7 @@ a:hover, a:focus {
     </head>
     <html>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar w/ text</a>
+  <a class="navbar-brand" href="#">Admin pagina</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -258,31 +258,39 @@ a:hover, a:focus {
       <li class="nav-item">
         <a class="nav-link" href="Factuur.php">Factuur</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Overzicht.php">Overzicht </a>
+      </li>
       <li class="nav-item active">
-        <a class="nav-link" href="Overzicht.php">Overzicht <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="AdminPagina.php">Admin Pagina <span class="sr-only">(current)</span></a>
       </li>
     </ul>
     <span class="nav-item">
-    <?php
-$ID = $_SESSION['ID'];
-$sql = "SELECT * FROM gebruiker,gebruikersinfo WHERE gebruiker.Gebemail = '$ID'
-AND gebruiker.GebruikerID = gebruikersinfo.GebruikerID";
-
-mysqli_select_db($conn, $database);
-		$result = mysqli_query($conn, $sql);
-		
-		if (!$result) {
-			die('SQL Error: ' . mysqli_error($conn));
-		}
-		
-		while ($row = mysqli_fetch_array($result)) {
-    echo '<a class="nav-link" href="#">'.$row['GebVNaam'].' '.$row['GebANaam'].'</a>';
-    }
-
-       ?>
-    </span>
-  </div>
-</nav>
+            <?php
+               $ID = $_SESSION['ID'];
+               $sql = "SELECT * FROM gebruiker,gebruikersinfo WHERE gebruiker.Gebemail = '$ID'
+               AND gebruiker.GebruikerID = gebruikersinfo.GebruikerID";
+               
+               mysqli_select_db($conn, $database);
+               		$result = mysqli_query($conn, $sql);
+               		
+               		if (!$result) {
+               			die('SQL Error: ' . mysqli_error($conn));
+               		}
+               		
+               		while ($row = mysqli_fetch_array($result)) {
+                     echo '<span class="nav-link">  '.$row['GebVNaam'].' '.$row['GebANaam'].'</span>
+               				';
+                   }
+               
+                      ?>
+            </span>
+            <span class="nav-item">
+    <a class="btn btn-primary" href="../Php/logout.php">
+    logout
+  </a>
+         </div>
+      </nav>
 <div class="container">
     <h1> Gebruikers </h1>
   <table class="responsive-table">
@@ -314,12 +322,15 @@ mysqli_select_db($conn, $database);
 		while ($row = mysqli_fetch_array($result)) {
             echo'
             <tr>
-            <td data-title="Offerte Naam">'.$row['GebVNaam'].' '.$row['GebANaam'].'
-            <td data-title="Offerte Naam">'.$row['GebStraat'].' '.$row['GebHnr'].'
-            <td data-title="Offerte Naam">'.$row['GebPostc'].' '.$row['GebWoonP'].'
-            <td data-title="Offerte Naam">'.$row['Gebemail'].'
-            <td data-title="Offerte Naam">'.$row['GebTelnummer'].'
-            <td data-title="Download"><button class="btn btn-primary">Voeg gebruiker toe</button></td>
+            <td data-title="Offerte Naam">'.$row['GebVNaam'].' '.$row['GebANaam'].'</td>
+            <td data-title="Offerte Naam">'.$row['GebStraat'].' '.$row['GebHnr'].'</td>
+            <td data-title="Offerte Naam">'.$row['GebPostc'].' '.$row['GebWoonP'].'</td>
+            <td data-title="Offerte Naam">'.$row['Gebemail'].'</td>
+            <td data-title="Offerte Naam">'.$row['GebTelnummer'].'</td>
+            <form method="POST" action="../Php/GebruikerToevoegen.php">
+            <td data-title="Gebruikers-ID" style="display:none;"><input type="text" name="GebID" style="display:none;" value="'.$row['GebruikerID'].'"./></td>
+            <td data-title="Download"><button class="btn btn-primary" type="submit">Voeg gebruiker toe</button></td>
+            </form>
             </tr>
             ';
         }

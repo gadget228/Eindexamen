@@ -265,26 +265,31 @@ a:hover, a:focus {
       </li>
     </ul>
     <span class="nav-item">
-    <?php
-$ID = $_SESSION['ID'];
-$sql = "SELECT * FROM gebruiker,gebruikersinfo WHERE gebruiker.Gebemail = '$ID'
-AND gebruiker.GebruikerID = gebruikersinfo.GebruikerID";
-
-mysqli_select_db($conn, $database);
-		$result = mysqli_query($conn, $sql);
-		
-		if (!$result) {
-			die('SQL Error: ' . mysqli_error($conn));
-		}
-		
-		while ($row = mysqli_fetch_array($result)) {
-    echo '<a class="nav-link" href="#">'.$row['GebVNaam'].' '.$row['GebANaam'].'</a>';
-    }
-
-       ?>
-    </span>
-  </div>
-</nav>
+            <?php
+               $ID = $_SESSION['ID'];
+               $sql = "SELECT * FROM gebruiker,gebruikersinfo WHERE gebruiker.Gebemail = '$ID'
+               AND gebruiker.GebruikerID = gebruikersinfo.GebruikerID";
+               
+               mysqli_select_db($conn, $database);
+               		$result = mysqli_query($conn, $sql);
+               		
+               		if (!$result) {
+               			die('SQL Error: ' . mysqli_error($conn));
+               		}
+               		
+               		while ($row = mysqli_fetch_array($result)) {
+                     echo '<span class="nav-link">  '.$row['GebVNaam'].' '.$row['GebANaam'].'</span>
+               				';
+                   }
+               
+                      ?>
+            </span>
+            <span class="nav-item">
+    <a class="btn btn-primary" href="../Php/logout.php">
+    logout
+  </a>
+         </div>
+      </nav>
 <div class="container">
     <h1> Offertes </h1>
   <table class="responsive-table">
@@ -296,14 +301,14 @@ mysqli_select_db($conn, $database);
         <th scope="col">Offerte Prijs</th>
         <th scope="col">Offerte Datum</th>
         <th scope="col">Offerte Vervaldatum</th>
-        <th scope="col">Download</th>
       </tr>
     </thead>
     <tbody>
     <?php
         $GebID = $_SESSION['GebruikerID'];
         $sql = "SELECT * FROM offerte,klant WHERE GebID = '$GebID'
-        AND offerte.KID = klant.KID";
+        AND offerte.KID = klant.KID
+        ORDER BY offerte.OffDate DESC";
         mysqli_select_db($conn, $database);
 		$result = mysqli_query($conn, $sql);
 		
@@ -316,10 +321,9 @@ mysqli_select_db($conn, $database);
             <tr>
             <td data-title="Offerte Naam">'.$row['OffNaam'].'
             <td data-title="Offerte Naam">'.$row['KVnaam'].' '.$row['KAnaam'].'
-            <td data-title="Offerte Naam">'.$row['OffPrijs'].'
+            <td data-title="Offerte Naam">&euro;'.number_format($row['OffPrijs'], 2, ',', '.').'
             <td data-title="Offerte Naam">'.$row['OffDate'].'
             <td data-title="Offerte Naam">'.$row['OffVVDate'].'
-            <td data-title="Download" date-type="Icon"><i class="fas fa-download"></i></td>
             </tr>
             ';
         }
@@ -337,14 +341,14 @@ mysqli_select_db($conn, $database);
         <th scope="col">Factuur Prijs</th>
         <th scope="col">Factuur Datum</th>
         <th scope="col">Factuur Vervaldatum</th>
-        <th scope="col">Download</th>
       </tr>
     </thead>
     <tbody>
     <?php
         $GebID = $_SESSION['GebruikerID'];
         $sql = "SELECT * FROM factuur,klant WHERE GebID = '$GebID'
-        AND factuur.KID = klant.KID";
+        AND factuur.KID = klant.KID
+        ORDER BY factuur.FDate DESC";
         mysqli_select_db($conn, $database);
 		$result = mysqli_query($conn, $sql);
 		
@@ -355,12 +359,11 @@ mysqli_select_db($conn, $database);
 		while ($row = mysqli_fetch_array($result)) {
             echo'
             <tr>
-            <td data-title="Offerte Naam">'.$row['OffNaam'].'
+            <td data-title="Offerte Naam">'.$row['FNaam'].'
             <td data-title="Offerte Naam">'.$row['KVnaam'].' '.$row['KAnaam'].'
-            <td data-title="Offerte Naam">'.$row['OffPrijs'].'
-            <td data-title="Offerte Naam">'.$row['OffDate'].'
-            <td data-title="Offerte Naam">'.$row['OffVVDate'].'
-            <td data-title="Download" date-type="Icon"><i class="fas fa-download"></i></td>
+            <td data-title="Offerte Naam">&euro;'.number_format($row['FPrijs'], 2, ',', '.').'
+            <td data-title="Offerte Naam">'.$row['FDate'].'
+            <td data-title="Offerte Naam">'.$row['FVVDate'].'
             </tr>
             ';
         }

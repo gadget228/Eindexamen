@@ -1,6 +1,7 @@
 <?php
    session_start();
    include '../Include/db.php';
+   error_reporting(E_ERROR | E_WARNING | E_PARSE);
    $email = $_SESSION['ID'];
    $sql = "SELECT * FROM gebruiker WHERE Gebemail = '$email'";
    mysqli_select_db($conn, $database);
@@ -10,6 +11,93 @@
    {
      echo "asergdfuinpajodfgpiuadsnvfpiasduonfpasoDU:fn asdp;ikgfjhn adpiouvfnaspdoiudv";
    }
+
+   if($_SESSION['MailSend'] == "1")
+{
+  echo '
+  <div id="myModal" class="modal fade" role="dialog">
+<div class="modal-dialog">
+  <!-- Modal content-->
+  <div class="modal-content">
+	<div class="modal-header">
+	  <h4 class="modal-title">Offerte Verzonden!</h4>
+	</div>
+	<div class="modal-body">
+	  <p>Uw offerte is naar uw e-mail adress verstuurt.</p>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+	</div>
+  </div>
+</div>
+</div>';
+$_SESSION['MailSend'] == "0";
+}
+
+if($_SESSION['OffADD'] == "1")
+{
+  echo '
+  <div id="myModal" class="modal fade" role="dialog">
+<div class="modal-dialog">
+  <!-- Modal content-->
+  <div class="modal-content">
+	<div class="modal-header">
+	  <h4 class="modal-title">Offerte Gegevens toegevoegd!</h4>
+	</div>
+	<div class="modal-body">
+	  <p>De offerte gegevens zijn toegevoegd!</p>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+	</div>
+  </div>
+</div>
+</div>';
+$_SESSION['OffADD'] = "0";
+}
+if($_SESSION['KlantADD'] == "1")
+{
+  echo '
+  <div id="myModal" class="modal fade" role="dialog">
+<div class="modal-dialog">
+  <!-- Modal content-->
+  <div class="modal-content">
+	<div class="modal-header">
+	  <h4 class="modal-title">Klant Toegevoegd!</h4>
+	</div>
+	<div class="modal-body">
+	  <p>De klant is succesvol toegevoegd aan de offerte.</p>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+	</div>
+  </div>
+</div>
+</div>';
+$_SESSION['KlantADD'] = "0";
+}
+
+if($_SESSION['ProdADDED'] == "1")
+{
+  echo '
+  <div id="myModal" class="modal fade" role="dialog">
+<div class="modal-dialog">
+  <!-- Modal content-->
+  <div class="modal-content">
+	<div class="modal-header">
+	  <h4 class="modal-title">Product Toegevoegd!</h4>
+	</div>
+	<div class="modal-body">
+	  <p>Het product is succesvol toegevoegd aan de offerte.</p>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+	</div>
+  </div>
+</div>
+</div>';
+$_SESSION['ProdADDED'] = "0";
+}
    ?>
 <!DOCTYPE html>
 <html>
@@ -150,7 +238,7 @@
          </div>
       </div>
       <div id="htmlTableId">
-         <form method="POST" action="../Php/Pdfgenerator2.php">
+         <form method="POST" action="../Php/SendEmail.php">
             <div class="row">
                <div class="col-md-4">
                   <?php
@@ -220,13 +308,23 @@
                      </tbody>
                   </table>
                </div>
-               <button class="login100-form-btn" type="submit">Generate pdf</button>
+               <button class="login100-form-btn" type="submit">Verstuur Offerte</button>
          </form>
          </div>
          <div class="col-md-2"></div>
       </div>
                               </div>
-   
+                              <script>
+    
+    /*$(document).ready(function(){        
+	$('#myModal').modal('show');
+	 });  
+
+            $('.message a').click(function(){
+   $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+}); */
+
+            </script>
       </body>
    </html>
    `
